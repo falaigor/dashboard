@@ -20,65 +20,65 @@ const Chart = dynamic(() => import("react-apexcharts"), {
   ssr: false,
 });
 
-export default function Dashboard() {
-  const options = {
-    chart: {
-      toolbar: {
-        show: false,
-      },
-      zoom: {
-        enabled: false,
-      },
-      foreColor: theme.colors.gray[500],
-    },
-    grid: {
+const options = {
+  chart: {
+    toolbar: {
       show: false,
     },
-    dataLabels: {
-      enabled: true,
-    },
-    tooltip: {
+    zoom: {
       enabled: false,
-      x: {
-        format: "MMM yyyy",
-      },
     },
-    xaxis: {
-      type: "datetime",
-      min: new Date("Jan 2022").getTime(),
-      tickAmount: 12,
-      axisBorder: {
-        color: theme.colors.gray[600],
-      },
-      axisTicks: {
-        color: theme.colors.gray[600],
-      },
-      categories: [
-        "Jan 2022",
-        "Feb 2022",
-        "Mar 2022",
-        "Apr 2022",
-        "May 2022",
-        "Jun 2022",
-        "Jul 2022",
-        "Aug 2022",
-        "Sep 2022",
-        "Oct 2022",
-        "Nov 2022",
-        "Dec 2022",
-      ],
+    foreColor: theme.colors.gray[500],
+  },
+  grid: {
+    show: false,
+  },
+  dataLabels: {
+    enabled: true,
+  },
+  tooltip: {
+    enabled: false,
+    x: {
+      format: "MMM yyyy",
     },
-    fill: {
-      opacity: 0.3,
-      type: "gradient",
-      gradient: {
-        shade: "dark",
-        opacityFrom: 0.7,
-        opacityTo: 0.3,
-      },
+  },
+  xaxis: {
+    type: "datetime",
+    min: new Date("Jan 2022").getTime(),
+    tickAmount: 12,
+    axisBorder: {
+      color: theme.colors.gray[600],
     },
-  };
+    axisTicks: {
+      color: theme.colors.gray[600],
+    },
+    categories: [
+      "Jan 2022",
+      "Feb 2022",
+      "Mar 2022",
+      "Apr 2022",
+      "May 2022",
+      "Jun 2022",
+      "Jul 2022",
+      "Aug 2022",
+      "Sep 2022",
+      "Oct 2022",
+      "Nov 2022",
+      "Dec 2022",
+    ],
+  },
+  fill: {
+    opacity: 0.3,
+    type: "gradient",
+    gradient: {
+      shade: "dark",
+      opacityFrom: 0.7,
+      opacityTo: 0.3,
+    },
+  },
+};
 
+export default function Dashboard() {
   const series = [
     {
       name: "series1",

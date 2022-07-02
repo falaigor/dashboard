@@ -1,0 +1,26 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Project {
+  id        String   @id @default(uuid())
+  name      String
+  issues    Issue[]
+  createdAt DateTime @default(now())
+}
+
+model Issue {
+  id         String   @id @default(uuid())
+  quantity   Float
+  Project    Project? @relation(fields: [project_id], references: [id])
+  project_id String?
+  createdAt  DateTime @default(now())
+}
