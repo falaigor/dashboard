@@ -10,6 +10,10 @@ export function SidebarNav() {
         <NavLink icon={RiDashboardLine} href="/">
           Dashboard
         </NavLink>
+
+        <NavLink icon={RiDashboardLine} href="/projects">
+          Projetos
+        </NavLink>
       </NavSection>
     </Stack>
   );
