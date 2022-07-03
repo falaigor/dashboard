@@ -26,7 +26,7 @@ const options = {
       show: false,
     },
     zoom: {
-      enabled: false,
+      enabled: true,
     },
     foreColor: theme.colors.gray[500],
   },
@@ -111,10 +111,10 @@ export default function Dashboard() {
               </Text>
               <StatGroup>
                 <Stat>
-                  <StatNumber>345,670</StatNumber>
-                  <StatHelpText>
+                  <StatHelpText fontSize={24}>
                     <StatArrow type="increase" />
                     23.36%
+                    <StatNumber fontSize={14}>345,670</StatNumber>
                   </StatHelpText>
                 </Stat>
               </StatGroup>
@@ -126,7 +126,7 @@ export default function Dashboard() {
               </Text>
               <StatGroup>
                 <Stat>
-                  <StatNumber>345,670</StatNumber>
+                  <StatNumber fontSize={24}>345,670</StatNumber>
                 </Stat>
               </StatGroup>
             </Box>
