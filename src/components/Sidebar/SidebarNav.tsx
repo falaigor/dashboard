@@ -7,7 +7,7 @@ export function SidebarNav() {
   return (
     <Stack spacing="12" align="flex-start">
       <NavSection title="GERAL">
-        <NavLink icon={RiDashboardLine} href="/">
+        <NavLink shouldMathExactHref={true} icon={RiDashboardLine} href="/">
           Dashboard
         </NavLink>
 
