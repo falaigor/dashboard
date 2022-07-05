@@ -8,7 +8,6 @@ import {
   Th,
   Thead,
   Tr,
-  Checkbox,
   Tbody,
   Td,
   Text,
@@ -21,13 +20,54 @@ import { RiAddLine } from "react-icons/ri";
 import { Header } from "../../components/Header";
 import { Pagination } from "../../components/Pagination";
 import { Sidebar } from "../../components/Sidebar";
-import { Project } from "@prisma/client";
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const projects = await prisma.project.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+    include: {
+      issues: {
+        select: {
+          quantity: true,
+        },
+      },
+    },
+  });
+
+  const data = projects.map((project) => {
+    return {
+      id: project.id,
+      name: project.name,
+      createdAt: project.createdAt.toLocaleDateString("pt-BR"),
+      issues: project.issues,
+    };
+  });
+  console.log(data);
+
+  return {
+    props: {
+      projects: data,
+    },
+  };
+};
 
 type ProjectsProps = {
-  projects: Project[];
+  projects: {
+    id: string;
+    name: string;
+    createdAt: Date;
+    issues: { quantity: number }[];
+  }[];
 };
 
 export default function ProjectList({ projects }: ProjectsProps) {
+  function issuesQuantity(issues: any) {
+    if (issues.length === 0) return "0";
+
+    return issues.map((issue) => issue.quantity).reduce((acc, i) => acc + i);
+  }
+
   const isWideVersion = useBreakpointValue({
     base: false,
     lg: true,
@@ -63,19 +103,25 @@ export default function ProjectList({ projects }: ProjectsProps) {
             <Thead>
               <Tr>
                 <Th>Projeto</Th>
+                <Th>Issues</Th>
                 {isWideVersion && <Th>Data de Cadastro</Th>}
               </Tr>
             </Thead>
 
             <Tbody>
               {projects.map((p) => (
-                <Tr>
+                <Tr key={p.id}>
                   <Td>
                     <Box>
                       <Text fontWeight="bold">{p.name}</Text>
                     </Box>
                   </Td>
-                  {isWideVersion && <Td>28 de Abril, 2021</Td>}
+                  <Td>
+                    <Box>
+                      <Text fontWeight="bold">{issuesQuantity(p.issues)}</Text>
+                    </Box>
+                  </Td>
+                  {isWideVersion && <Td>{p.createdAt}</Td>}
                 </Tr>
               ))}
             </Tbody>
@@ -87,21 +133,3 @@ export default function ProjectList({ projects }: ProjectsProps) {
     </Box>
   );
 }
-
-export const getServerSideProps: GetServerSideProps = async () => {
-  const projects = await prisma.project.findMany();
-
-  const data = projects.map((project) => {
-    return {
-      id: project.id,
-      name: project.name,
-      date: project.createdAt.toISOString(),
-    };
-  });
-
-  return {
-    props: {
-      projects: data,
-    },
-  };
-};

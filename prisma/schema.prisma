@@ -19,7 +19,7 @@ model Project {
 
 model Issue {
   id         String   @id @default(uuid())
-  quantity   Float
+  quantity   Float    @default(0)
   Project    Project? @relation(fields: [project_id], references: [id])
   project_id String?
   createdAt  DateTime @default(now())
